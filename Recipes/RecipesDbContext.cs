@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Recipes.EntityConfigurations;
 using Recipes.Models;
 
 namespace Recipes
@@ -18,25 +19,19 @@ namespace Recipes
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<Category>()
-                .HasKey(c => c.Name);
+                .ApplyConfiguration(new AmountTypeConfiguration());
 
             modelBuilder
-                .Entity<Category>()
-                .Property(c => c.Name)
-                .IsRequired();
+                .ApplyConfiguration(new CategoryConfiguration());
 
             modelBuilder
-                .Entity<Category>()
-                .HasMany(c => c.Recipes)
-                .WithOne(r => r.Category);
+                .ApplyConfiguration(new IngredientConfiguration());
 
             modelBuilder
-                .Entity<Recipe>()
-                .Property(r => r.Description)
-                .IsRequired();
+                .ApplyConfiguration(new RecipeConfiguration());
 
-
+            modelBuilder
+                .ApplyConfiguration(new TagConfiguration());
         }
     }
 }
